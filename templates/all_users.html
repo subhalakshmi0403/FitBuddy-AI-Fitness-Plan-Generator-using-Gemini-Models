@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        FitBuddy | Admin View
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', path='styles.css') }}"
+    >
+
+</head>
+
+
+<body>
+
+
+<header class="topbar">
+
+    <div class="brand">
+        FitBuddy<span>+</span>
+    </div>
+
+
+    <nav>
+
+        <a href="/">
+            Home
+        </a>
+
+        <a href="/view-all-users">
+            Admin View
+        </a>
+
+        <a href="/docs">
+            API Docs
+        </a>
+
+    </nav>
+
+</header>
+
+
+<main class="page-container wide">
+
+
+    <section class="page-title">
+
+        <p class="eyebrow">
+            ADMIN / COACH VIEW
+        </p>
+
+        <h1>
+            All users and plans
+        </h1>
+
+        <p>
+            Review stored profiles and compare
+            original and updated AI plans.
+        </p>
+
+    </section>
+
+
+    {% if not users %}
+
+
+    <section class="card empty-state">
+
+        <h2>
+            No users yet
+        </h2>
+
+        <p>
+            Generate a plan from the home page
+            to create the first user record.
+        </p>
+
+        <a
+            class="primary-button inline-button"
+            href="/"
+        >
+            Create a plan
+        </a>
+
+    </section>
+
+
+    {% else %}
+
+
+    <div class="table-wrapper card">
+
+
+        <table>
+
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        User
+                    </th>
+
+                    <th>
+                        Profile
+                    </th>
+
+                    <th>
+                        Goal
+                    </th>
+
+                    <th>
+                        Original Plan
+                    </th>
+
+                    <th>
+                        Updated Plan
+                    </th>
+
+                    <th>
+                        Action
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+
+            {% for user in users %}
+
+
+                <tr>
+
+
+                    <td>
+
+                        <strong>
+                            {{ user.username }}
+                        </strong>
+
+                        <br>
+
+                        <span class="muted">
+                            {{ user.user_id }}
+                        </span>
+
+                    </td>
+
+
+                    <td>
+
+                        {{ user.age }} yrs
+
+                        <br>
+
+                        {{ user.weight }} kg
+
+                        <br>
+
+                        {{ user.intensity|title }}
+
+                    </td>
+
+
+                    <td>
+
+                        {{ user.goal|title }}
+
+                    </td>
+
+
+                    <td>
+
+                        <pre class="mini-plan">{{ user.original_plan }}</pre>
+
+                    </td>
+
+
+                    <td>
+
+                        {% if user.updated_plan %}
+
+                            <pre class="mini-plan">{{ user.updated_plan }}</pre>
+
+                        {% else %}
+
+                            <span class="muted">
+                                No update yet
+                            </span>
+
+                        {% endif %}
+
+                    </td>
+
+
+                    <td>
+
+                        <form
+                            action="/delete-user/{{ user.user_id }}"
+                            method="post"
+                            onsubmit="return confirm('Delete this user and their plans?');"
+                        >
+
+                            <button
+                                class="danger-button"
+                                type="submit"
+                            >
+
+                                Delete
+
+                            </button>
+
+                        </form>
+
+                    </td>
+
+
+                </tr>
+
+
+            {% endfor %}
+
+
+            </tbody>
+
+
+        </table>
+
+
+    </div>
+
+
+    {% endif %}
+
+
+</main>
+
+
+<footer>
+
+    FitBuddy • Admin dashboard
+
+</footer>
+
+
+</body>
+
+</html>

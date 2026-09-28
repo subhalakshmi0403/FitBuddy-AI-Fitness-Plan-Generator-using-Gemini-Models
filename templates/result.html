@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        FitBuddy | Your Plan
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', path='styles.css') }}"
+    >
+
+</head>
+
+
+<body>
+
+
+<header class="topbar">
+
+    <div class="brand">
+        FitBuddy<span>+</span>
+    </div>
+
+
+    <nav>
+
+        <a href="/">
+            New Plan
+        </a>
+
+        <a href="/view-all-users">
+            Admin View
+        </a>
+
+        <a href="/docs">
+            API Docs
+        </a>
+
+    </nav>
+
+</header>
+
+
+<main class="page-container">
+
+
+    <section class="page-title">
+
+        <p class="eyebrow">
+            YOUR PERSONALIZED PLAN
+        </p>
+
+        <h1>
+            Welcome, {{ username }} 👋
+        </h1>
+
+        <p>
+            Your plan is tailored around your
+            current goal and preferred intensity.
+        </p>
+
+    </section>
+
+
+    <section class="profile-grid">
+
+
+        <div class="profile-item">
+
+            <small>
+                User ID
+            </small>
+
+            <strong>
+                {{ user_id }}
+            </strong>
+
+        </div>
+
+
+        <div class="profile-item">
+
+            <small>
+                Age
+            </small>
+
+            <strong>
+                {{ age }}
+            </strong>
+
+        </div>
+
+
+        <div class="profile-item">
+
+            <small>
+                Weight
+            </small>
+
+            <strong>
+                {{ weight }} kg
+            </strong>
+
+        </div>
+
+
+        <div class="profile-item">
+
+            <small>
+                Goal
+            </small>
+
+            <strong>
+                {{ goal|title }}
+            </strong>
+
+        </div>
+
+
+        <div class="profile-item">
+
+            <small>
+                Intensity
+            </small>
+
+            <strong>
+                {{ intensity|title }}
+            </strong>
+
+        </div>
+
+
+    </section>
+
+
+    <section class="result-layout">
+
+
+        <article class="card plan-card">
+
+
+            <div class="section-heading">
+
+                <div>
+
+                    <p class="eyebrow">
+                        7-DAY WORKOUT
+                    </p>
+
+                    <h2>
+
+                        {% if feedback %}
+
+                            Updated Plan
+
+                        {% else %}
+
+                            Original Plan
+
+                        {% endif %}
+
+                    </h2>
+
+                </div>
+
+
+                <span class="pill">
+                    AI Generated
+                </span>
+
+            </div>
+
+
+            <pre class="plan-output">{{ workout_plan }}</pre>
+
+
+        </article>
+
+
+        <aside class="card tip-card">
+
+            <p class="eyebrow">
+                NUTRITION / RECOVERY
+            </p>
+
+            <h2>
+                One useful tip
+            </h2>
+
+            <p>
+                {{ nutrition_tip }}
+            </p>
+
+        </aside>
+
+
+    </section>
+
+
+    <section class="card feedback-card">
+
+
+        <p class="eyebrow">
+            MAKE IT FIT YOU
+        </p>
+
+        <h2>
+            Update your plan with feedback
+        </h2>
+
+        <p class="muted">
+
+            Examples:
+            "Add more cardio",
+            "Include another rest day",
+            or "Reduce high-impact exercises".
+
+        </p>
+
+
+        <form
+            action="/submit-feedback"
+            method="post"
+        >
+
+            <input
+                type="hidden"
+                name="user_id"
+                value="{{ user_id }}"
+            >
+
+
+            <textarea
+                name="feedback"
+                rows="5"
+                maxlength="2000"
+                required
+                placeholder="Tell FitBuddy what you want to change..."
+            ></textarea>
+
+
+            <button
+                class="primary-button"
+                type="submit"
+            >
+
+                Update My Plan →
+
+            </button>
+
+        </form>
+
+    </section>
+
+
+    {% if feedback %}
+
+    <section class="card feedback-result">
+
+        <p class="eyebrow">
+            LAST FEEDBACK
+        </p>
+
+        <p>
+            {{ feedback }}
+        </p>
+
+        <p class="success-text">
+
+            Your plan has been regenerated
+            using your feedback.
+
+        </p>
+
+    </section>
+
+    {% endif %}
+
+
+</main>
+
+
+<footer>
+
+    FitBuddy • AI-assisted wellness planning
+
+</footer>
+
+
+</body>
+
+</html>

@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        FitBuddy | AI Fitness Planner
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', path='styles.css') }}"
+    >
+
+</head>
+
+<body>
+
+<header class="topbar">
+
+    <div class="brand">
+        FitBuddy<span>+</span>
+    </div>
+
+    <nav>
+
+        <a href="/">
+            Home
+        </a>
+
+        <a href="/view-all-users">
+            Admin View
+        </a>
+
+        <a href="/docs">
+            API Docs
+        </a>
+
+    </nav>
+
+</header>
+
+
+<main class="hero">
+
+    <section class="hero-copy">
+
+        <p class="eyebrow">
+            AI FITNESS PLAN GENERATOR
+        </p>
+
+        <h1>
+            Your fitness journey,
+            <span>personalized.</span>
+        </h1>
+
+        <p class="lead">
+
+            Generate a structured 7-day workout
+            plan and practical nutrition or
+            recovery tips based on your goals
+            and preferred training intensity.
+
+        </p>
+
+
+        <div class="feature-row">
+
+            <div>
+
+                <strong>
+                    7-Day
+                </strong>
+
+                <small>
+                    Workout Plan
+                </small>
+
+            </div>
+
+
+            <div>
+
+                <strong>
+                    AI
+                </strong>
+
+                <small>
+                    Personalization
+                </small>
+
+            </div>
+
+
+            <div>
+
+                <strong>
+                    Feedback
+                </strong>
+
+                <small>
+                    Plan Updates
+                </small>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <section class="card form-card">
+
+        <div class="card-heading">
+
+            <h2>
+                Build your plan
+            </h2>
+
+            <p>
+                Tell FitBuddy a little about yourself.
+            </p>
+
+        </div>
+
+
+        {% if error %}
+
+        <div class="alert error">
+
+            {{ error }}
+
+        </div>
+
+        {% endif %}
+
+
+        <form
+            action="/generate-workout"
+            method="post"
+        >
+
+            <div class="form-grid">
+
+
+                <label>
+
+                    Name
+
+                    <input
+                        type="text"
+                        name="username"
+                        placeholder="Your name"
+                        maxlength="100"
+                        required
+                    >
+
+                </label>
+
+
+                <label>
+
+                    User ID
+
+                    <input
+                        type="text"
+                        name="user_id"
+                        placeholder="e.g. alex001"
+                        maxlength="100"
+                        required
+                    >
+
+                </label>
+
+
+                <label>
+
+                    Age
+
+                    <input
+                        type="number"
+                        name="age"
+                        min="13"
+                        max="100"
+                        placeholder="25"
+                        required
+                    >
+
+                </label>
+
+
+                <label>
+
+                    Weight (kg)
+
+                    <input
+                        type="number"
+                        name="weight"
+                        min="20"
+                        max="500"
+                        step="0.1"
+                        placeholder="70"
+                        required
+                    >
+
+                </label>
+
+
+                <label class="full">
+
+                    Fitness Goal
+
+                    <select
+                        name="goal"
+                        required
+                    >
+
+                        <option value="">
+                            Select a goal
+                        </option>
+
+                        <option value="weight loss">
+                            Weight Loss
+                        </option>
+
+                        <option value="muscle gain">
+                            Muscle Gain
+                        </option>
+
+                        <option value="general wellness">
+                            General Wellness
+                        </option>
+
+                        <option value="strength">
+                            Strength
+                        </option>
+
+                        <option value="flexibility">
+                            Flexibility
+                        </option>
+
+                        <option value="endurance">
+                            Endurance
+                        </option>
+
+                    </select>
+
+                </label>
+
+
+                <label class="full">
+
+                    Workout Intensity
+
+                    <select
+                        name="intensity"
+                        required
+                    >
+
+                        <option value="">
+                            Select intensity
+                        </option>
+
+                        <option value="low">
+                            Low
+                        </option>
+
+                        <option value="medium">
+                            Medium
+                        </option>
+
+                        <option value="high">
+                            High
+                        </option>
+
+                    </select>
+
+                </label>
+
+            </div>
+
+
+            <div class="notice">
+
+                <strong>
+                    Wellness note:
+                </strong>
+
+                FitBuddy provides general fitness
+                guidance. Stop if you experience
+                pain or unusual symptoms and seek
+                qualified professional advice for
+                medical conditions or injuries.
+
+            </div>
+
+
+            <button
+                class="primary-button"
+                type="submit"
+            >
+
+                Generate My 7-Day Plan →
+
+            </button>
+
+        </form>
+
+    </section>
+
+</main>
+
+
+<footer>
+
+    FitBuddy • AI-assisted wellness planning
+
+</footer>
+
+
+</body>
+
+</html>
